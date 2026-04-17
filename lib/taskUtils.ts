@@ -67,10 +67,7 @@ export function indentTask(tasks: Task[], taskId: string): Task[] {
     if (a.parent_id === b.parent_id) return a.position - b.position
     return 0
   })
-  const idx = flat.findIndex(t => t.id === taskId)
-  if (idx === 0) return tasks
-
-  const target = flat[idx]
+  const target = flat.find(t => t.id === taskId)!
   const siblingsAbove = flat.filter(
     t => t.parent_id === target.parent_id && t.position < target.position
   )

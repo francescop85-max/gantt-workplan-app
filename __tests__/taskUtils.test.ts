@@ -115,4 +115,19 @@ describe('outdentTask', () => {
     const result = outdentTask(tasks, 'a')
     expect(result.find(t => t.id === 'a')?.parent_id).toBeNull()
   })
+
+  it('shifts siblings down when outdenting into occupied position', () => {
+    const tasks: Task[] = [
+      makeTask({ id: 'a', parent_id: null, position: 0 }),
+      makeTask({ id: 'b', parent_id: null, position: 1 }),   // parent of c
+      makeTask({ id: 'c', parent_id: 'b', position: 0 }),
+      makeTask({ id: 'd', parent_id: null, position: 2 }),   // should shift to 3
+    ]
+    const result = outdentTask(tasks, 'c')
+    const c = result.find(t => t.id === 'c')!
+    const d = result.find(t => t.id === 'd')!
+    expect(c.parent_id).toBeNull()
+    expect(c.position).toBe(2)
+    expect(d.position).toBe(3)
+  })
 })
