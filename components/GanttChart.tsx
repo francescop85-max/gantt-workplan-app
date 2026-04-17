@@ -48,7 +48,10 @@ export default function GanttChart({ tasks, viewMode = 'Week', onDateChange }: P
     const ganttTasks = tasks.map(taskToGantt).filter(Boolean) as GanttTask[]
     if (!ganttTasks.length) return
 
-    import('frappe-gantt').then(({ default: Gantt }) => {
+    Promise.all([
+      import('frappe-gantt'),
+      import('frappe-gantt/dist/frappe-gantt.css' as never),
+    ]).then(([{ default: Gantt }]) => {
       if (ganttRef.current) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (ganttRef.current as any).refresh(ganttTasks)
@@ -80,18 +83,11 @@ export default function GanttChart({ tasks, viewMode = 'Week', onDateChange }: P
           },
         })
       }
-    })
+    }))
   }, [tasks, viewMode, onDateChange])
 
   return (
-    <div>
-      <style>{`
-        .gantt .bar-delayed .bar { fill: #ef4444 !important; }
-        .gantt .bar-completed .bar { fill: #22c55e !important; }
-        .gantt .bar-in-progress .bar { fill: #3b82f6 !important; }
-        .gantt .bar { fill: #93c5fd; }
-        .gantt-container { overflow-x: auto; }
-      `}</style>
+    <div className="overflow-x-auto">
       <div ref={containerRef} />
     </div>
   )
