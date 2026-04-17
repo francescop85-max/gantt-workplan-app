@@ -17,17 +17,30 @@ export default function DashboardPage() {
     fetch(`/api/workplans/${id}/tasks`).then(r => r.json()).then(setTasks)
   }, [id])
 
-  if (!workplan) return <div className="text-gray-500 py-10 text-center">Loading...</div>
+  if (!workplan) return (
+    <div className="flex items-center justify-center py-20">
+      <div className="flex items-center gap-3 text-slate-400">
+        <svg className="animate-spin w-5 h-5" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="2" strokeDasharray="40" strokeDashoffset="20"/></svg>
+        Loading dashboard...
+      </div>
+    </div>
+  )
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6 no-print">
-        <div className="flex items-center gap-3">
-          <Link href={`/workplan/${id}`} className="text-gray-400 hover:text-gray-700 text-sm">← Editor</Link>
-          <h1 className="text-xl font-bold text-gray-900">{workplan.name} — Dashboard</h1>
+        <div className="flex items-center gap-3 min-w-0">
+          <Link href={`/workplan/${id}`} className="flex items-center gap-1.5 text-slate-400 hover:text-slate-700 text-sm font-medium transition-colors flex-shrink-0">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Editor
+          </Link>
+          <div className="h-4 w-px bg-slate-200 flex-shrink-0" />
+          <h1 className="text-lg font-bold text-slate-900 truncate">{workplan.name}</h1>
+          <span className="text-xs font-semibold text-slate-400 flex-shrink-0">Dashboard</span>
         </div>
         <button onClick={() => window.print()}
-          className="px-3 py-1.5 text-sm border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+          className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-2 border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="4" width="9" height="6" rx="1" stroke="currentColor" strokeWidth="1.3"/><path d="M4 4V2h5v2M4 10v1h5v-1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
           Print PDF
         </button>
       </div>

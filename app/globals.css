@@ -1,9 +1,37 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-navy-950: #080f1a;
+  --color-navy-900: #0d1b2a;
+  --color-navy-800: #162338;
+  --color-navy-700: #1e3151;
+  --color-fao-blue: #0066cc;
+  --color-fao-blue-light: #1a7de0;
+  --color-status-done: #16a34a;
+  --color-status-progress: #2563eb;
+  --color-status-delayed: #dc2626;
+  --color-status-none: #6b7280;
+}
 
 @media print {
   nav, .no-print { display: none !important; }
   body { background: white; }
   .print-full { width: 100% !important; }
 }
+
+/* Gantt chart overrides */
+.gantt .bar { fill: #93c5fd; }
+.gantt .bar-label { fill: #1e3a5f; font-size: 11px; }
+.gantt .bar-delayed .bar { fill: #ef4444 !important; }
+.gantt .bar-completed .bar { fill: #22c55e !important; }
+.gantt .bar-in-progress .bar { fill: #3b82f6 !important; }
+.gantt .grid-header { fill: #f8fafc; }
+.gantt .grid-row:nth-child(even) { fill: #f1f5f9; }
+.gantt .lower-text, .gantt .upper-text { fill: #475569; }
+.gantt .today-highlight { fill: #dbeafe; opacity: 0.4; }
+
+/* Smooth scrollbar */
+* { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }

@@ -94,41 +94,57 @@ export default function WorkplanEditorPage() {
     )))
   }, [])
 
-  if (!workplan) return <div className="text-gray-500 py-10 text-center">Loading...</div>
+  if (!workplan) return (
+    <div className="flex items-center justify-center py-20">
+      <div className="flex items-center gap-3 text-slate-400">
+        <svg className="animate-spin w-5 h-5" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="2" strokeDasharray="40" strokeDashoffset="20"/></svg>
+        Loading workplan...
+      </div>
+    </div>
+  )
 
   return (
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-6 no-print">
-        <div className="flex items-center gap-3">
-          <Link href="/" className="text-gray-400 hover:text-gray-700 text-sm">← Back</Link>
-          <h1 className="text-xl font-bold text-gray-900">{workplan.name}</h1>
-          {saving && <span className="text-xs text-gray-400 animate-pulse">Saving...</span>}
+        <div className="flex items-center gap-3 min-w-0">
+          <Link href="/" className="flex items-center gap-1.5 text-slate-400 hover:text-slate-700 text-sm font-medium transition-colors flex-shrink-0">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Back
+          </Link>
+          <div className="h-4 w-px bg-slate-200 flex-shrink-0" />
+          <h1 className="text-lg font-bold text-slate-900 truncate">{workplan.name}</h1>
+          {saving && <span className="text-xs text-blue-500 animate-pulse flex-shrink-0 font-medium">Saving...</span>}
         </div>
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-shrink-0">
           <Link href={`/workplan/${id}/dashboard`}
-            className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-colors">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3"/><rect x="7" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3"/><rect x="1" y="7" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3"/><rect x="7" y="7" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3"/></svg>
             Dashboard
           </Link>
           <button onClick={() => setShowShare(true)}
-            className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-colors">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="10" cy="2.5" r="1.5" stroke="currentColor" strokeWidth="1.3"/><circle cx="10" cy="10.5" r="1.5" stroke="currentColor" strokeWidth="1.3"/><circle cx="3" cy="6.5" r="1.5" stroke="currentColor" strokeWidth="1.3"/><path d="M4.5 7.3l4 2.2M4.5 5.7l4-2.2" stroke="currentColor" strokeWidth="1.3"/></svg>
             Share
           </button>
           <button onClick={() => save(tasks)}
-            className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 8v3h9V8M6.5 2v6M4.5 6l2 2 2-2" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
             Save
           </button>
           <button onClick={() => window.print()}
-            className="px-3 py-1.5 text-sm border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-2 border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="4" width="9" height="6" rx="1" stroke="currentColor" strokeWidth="1.3"/><path d="M4 4V2h5v2M4 10v1h5v-1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
             Print PDF
           </button>
         </div>
       </div>
 
       {/* Task Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6 overflow-hidden">
-        <div className="px-4 py-3 border-b border-gray-100 bg-gray-50 no-print">
-          <h2 className="text-sm font-semibold text-gray-700">Task List</h2>
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm mb-6 overflow-hidden">
+        <div className="px-5 py-3.5 border-b border-slate-100 bg-slate-50 no-print flex items-center justify-between">
+          <h2 className="text-sm font-bold text-slate-700">Task List</h2>
+          <span className="text-xs text-slate-400">{tasks.length} tasks</span>
         </div>
         <div className="p-4">
           <TaskTable
@@ -144,13 +160,13 @@ export default function WorkplanEditorPage() {
       </div>
 
       {/* Gantt Chart */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden print-full">
-        <div className="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between no-print">
-          <h2 className="text-sm font-semibold text-gray-700">Gantt Chart</h2>
-          <div className="flex gap-1">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden print-full">
+        <div className="px-5 py-3.5 border-b border-slate-100 bg-slate-50 flex items-center justify-between no-print">
+          <h2 className="text-sm font-bold text-slate-700">Gantt Chart</h2>
+          <div className="flex gap-1 bg-slate-200 rounded-lg p-0.5">
             {(['Day', 'Week', 'Month'] as ViewMode[]).map(m => (
               <button key={m} onClick={() => setViewMode(m)}
-                className={`px-3 py-1 text-xs rounded-md transition-colors ${viewMode === m ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${viewMode === m ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
                 {m}
               </button>
             ))}
