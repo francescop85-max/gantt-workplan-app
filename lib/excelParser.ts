@@ -30,6 +30,7 @@ export function parseExcelRows(rows: RawRow[]): Omit<Task, 'id' | 'workplan_id' 
       actual_start: toDateStr(row['Actual Start']),
       actual_end: toDateStr(row['Actual End']),
       progress: Number(row['Progress (%)'] ?? 0) || 0,
+      // depends_on stays null at import time — task UUIDs don't exist yet; resolved post-insert if needed
       depends_on: null,
       comments: String(row['Comments'] ?? '').trim(),
       level: toLevel(row['Level']),
