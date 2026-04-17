@@ -15,6 +15,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="/frappe-gantt.css" />
+      </head>
       <body style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }} className="bg-slate-50 min-h-screen antialiased">
         <nav className="bg-[#0d1b2a] border-b border-white/10 px-6 flex items-center justify-between h-14 shadow-lg">
           <div className="flex items-center gap-3">
