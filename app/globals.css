@@ -1,3 +1,4 @@
+@import "frappe-gantt/dist/frappe-gantt.css";
 @import "tailwindcss";
 
 @theme {
