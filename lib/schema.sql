@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS workplans (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   description TEXT NOT NULL DEFAULT '',
-  share_token UUID NOT NULL DEFAULT gen_random_uuid(),
+  share_token UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
