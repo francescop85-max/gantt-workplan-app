@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import * as XLSX from 'xlsx'
 import sql from '@/lib/db'
 import { parseExcelRows } from '@/lib/excelParser'
-import { computeCodes } from '@/lib/taskUtils'
+import { computeCodes, computeStatus } from '@/lib/taskUtils'
 import { Task } from '@/types'
 
 export async function POST(request: Request) {
@@ -47,5 +47,6 @@ export async function POST(request: Request) {
   }
 
   const withCodes = computeCodes(insertedTasks)
-  return NextResponse.json({ workplan, tasks: withCodes }, { status: 201 })
+  const withStatus = withCodes.map(t => ({ ...t, status: computeStatus(t) }))
+  return NextResponse.json({ workplan, tasks: withStatus }, { status: 201 })
 }
