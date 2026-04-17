@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Task, Workplan } from '@/types'
 import { computeCodes, indentTask, outdentTask } from '@/lib/taskUtils'
@@ -14,7 +14,7 @@ type ViewMode = 'Day' | 'Week' | 'Month'
 
 export default function WorkplanEditorPage() {
   const { id } = useParams<{ id: string }>()
-  const router = useRouter()
+
   const [workplan, setWorkplan] = useState<Workplan | null>(null)
   const [tasks, setTasks] = useState<Task[]>([])
   const [viewMode, setViewMode] = useState<ViewMode>('Week')
@@ -95,8 +95,6 @@ export default function WorkplanEditorPage() {
   }, [])
 
   if (!workplan) return <div className="text-gray-500 py-10 text-center">Loading...</div>
-
-  void router
 
   return (
     <div>
